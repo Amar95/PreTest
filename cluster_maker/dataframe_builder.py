@@ -29,6 +29,11 @@ def define_dataframe_structure(column_specs):
 
     return pd.DataFrame(data)
 
+# cluster_maker/dataframe_builder.py
+
+def export_to_csv(dataframe, file_path):
+    dataframe.to_csv(file_path)
+
 ## Function to simulate data
 def simulate_data(seed_df, n_points=100, col_specs=None, random_state=None):
     if random_state is not None:
