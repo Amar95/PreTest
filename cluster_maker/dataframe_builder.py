@@ -50,6 +50,24 @@ def export_to_csv(dataframe, file_path):
 
 ## Function to simulate data
 def simulate_data(seed_df, n_points=100, col_specs=None, random_state=None):
+    """
+
+    seed_df is a dataframe which is seed data used to generate data points
+
+    n_points is the number of data points to be generated
+
+    col_specs is dictionary of specifications for each column
+
+    random_state is optional to sed random seed
+
+    1) after random seed is set for reproducibility, an empty list is created to store simulated data points
+    2) We iterate over each row using iterrows()
+    3) For each row we generate n points
+    4) apply column specific specifications, depending on distributin type the function simulates values
+    5) we then apped to simulated data list
+
+
+    """
     if random_state is not None:
         np.random.seed(random_state)
     
