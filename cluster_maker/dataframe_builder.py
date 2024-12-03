@@ -93,3 +93,49 @@ def simulate_data(seed_df, n_points=100, col_specs=None, random_state=None):
             simulated_data.append(simulated_point)
     
     return pd.DataFrame(simulated_data)
+
+def non_globular_cluster(seed_df, n_points=100, col_specs=None, random_state=None, shape='spiral', noise=0.1):
+    """
+    Simulate non-globular clusters based on seed data and column specifications.
+
+    Parameters:
+    seed_df (pd.DataFrame): Seed data used to generate data points.
+    n_points (int): Number of data points to be generated.
+    col_specs (dict): Dictionary of specifications for each column.
+    random_state (int): Optional random seed for reproducibility.
+    shape (str): Shape of the non-globular cluster ('spiral', 'crescent', etc.).
+    noise (float): Amount of noise to add to the data points.
+
+    Returns:
+    pd.DataFrame: A DataFrame containing the simulated non-globular cluster data points.
+    """
+    if random_state is not None:
+        np.random.seed(random_state)
+    
+    simulated_data = []
+
+    for _, representative in seed_df.iterrows():
+        for _ in range(n_points):
+            simulated_point = {}
+            for col in seed_df.columns:
+                if col_specs and col in col_specs:
+                    base_value = representative[col]
+                    if shape == 'spiral':
+                        angle = np.random.uniform(0, 2 * np.pi)
+                        radius = np.random.uniform(0, 1)
+                        x = radius * np.cos(angle)
+                        y = radius * np.sin(angle)
+                        simulated_point[col] = base_value + x + np.random.normal(0, noise)
+                    elif shape == 'crescent':
+                        angle = np.random.uniform(0, np.pi)
+                        radius = np.random.uniform(0.5, 1)
+                        x = radius * np.cos(angle)
+                        y = radius * np.sin(angle)
+                        simulated_point[col] = base_value + x + np.random.normal(0, noise)
+                    else:
+                        raise ValueError(f"Unsupported shape: {shape}")
+                else:
+                    raise ValueError(f"Column {col} has no specifications in col_specs.")
+            simulated_data.append(simulated_point)
+
+    return pd.DataFrame(simulated_data)
