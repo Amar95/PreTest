@@ -12,6 +12,20 @@ import numpy as np
 
 ## Function to define the wanted data structure
 def define_dataframe_structure(column_specs):
+    """"
+    First an empty dictionary is created which can store column data
+    maximum length is initialised to 0 to keep track of the length of points across the columns
+
+    for each spec it updates the max length to be maximum length found
+
+    returns column name for each spec and extends numerical columns with NaN to match max_length
+
+    the extended list is added to data dictionary with column name as the key
+
+    finally the function converts data dictionary to a pandas dataframe which is returned
+
+
+    """
     # Prepare data dictionary
     data = {}
     max_length = 0
